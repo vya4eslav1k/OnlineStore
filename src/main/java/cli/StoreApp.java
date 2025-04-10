@@ -52,6 +52,7 @@ public class StoreApp {
             } catch (NumberFormatException e) {
                 System.out.println("Необработанная ошибка");
             }
+            scanner.close();
         }
 
         System.out.println("Спасибо за покупки!");
