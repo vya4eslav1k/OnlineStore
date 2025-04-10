@@ -1,5 +1,6 @@
 package cli;
 
+import enums.Commands;
 import models.Product;
 import services.StoreService;
 
@@ -19,31 +20,37 @@ public class StoreApp {
 
         boolean running = true;
         while (running) {
-            System.out.println("1. Показать каталог");
-            System.out.println("2. Добавить товар в корзину");
-            System.out.println("3. Применить скидку");
-            System.out.println("4. Показать корзину");
-            System.out.println("5. Выход");
+            try {
+                System.out.println("""
+                        \n
+                        Пиши \'catalog\' что бы посмотреть каталог
+                        Пиши \'add\' что бы добавить товар в корзину
+                        Пиши \'discount\' что бы применить скидку
+                        Пиши \'list\' что бы показать корзину
+                        Пиши \'exit\' что бы выйти
+                        """);
 
-            String choice = scanner.nextLine();
-
-            switch (choice) {
-                case "1" -> store.showCatalog();
-                case "2" -> {
-                    System.out.print("Введите название товара: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Введите количество: ");
-                    int quantity = Integer.parseInt(scanner.nextLine());
-                    store.addProductToCart(name, quantity);
+                String choice = scanner.nextLine();
+                switch (Commands.valueOf(choice.toUpperCase())) {
+                    case Commands.CATALOG -> store.showCatalog();
+                    case Commands.ADD -> {
+                        System.out.print("Введите название товара: ");
+                        String name = scanner.nextLine();
+                        System.out.print("Введите количество: ");
+                        int quantity = Integer.parseInt(scanner.nextLine());
+                        store.addProductToCart(name, quantity);
+                    }
+                    case Commands.DISCOUNT -> {
+                        System.out.print("Введите процент скидки: ");
+                        double percent = Double.parseDouble(scanner.nextLine());
+                        store.applyDiscount(percent);
+                    }
+                    case Commands.LIST -> store.printCart();
+                    case Commands.EXIT -> running = false;
+                    default -> System.out.println("Неверный ввод.");
                 }
-                case "3" -> {
-                    System.out.print("Введите процент скидки: ");
-                    double percent = Double.parseDouble(scanner.nextLine());
-                    store.applyDiscount(percent);
-                }
-                case "4" -> store.printCart();
-                case "5" -> running = false;
-                default -> System.out.println("Неверный ввод.");
+            } catch (NumberFormatException e) {
+                System.out.println("Необработанная ошибка");
             }
         }
 
