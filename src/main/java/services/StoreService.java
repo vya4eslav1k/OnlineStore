@@ -17,13 +17,13 @@ public class StoreService {
 
     public void showCatalog() {
         for (Product p : catalog) {
-            System.out.println(p.getName() + " - " + p.getPrice() + " руб.");
+            System.out.println(p.name() + " - " + p.price() + " руб.");
         }
     }
 
     public void addProductToCart(String name, int quantity) {
         for (Product p : catalog) {
-            if (p.getName().equalsIgnoreCase(name)) {
+            if (p.name().equalsIgnoreCase(name)) {
                 cart.addItem(p, quantity);
                 System.out.println("Добавлено: " + name + " x" + quantity);
                 return;
@@ -33,12 +33,12 @@ public class StoreService {
     }
 
     public void applyDiscount(double percent) {
-        cart.applyDiscount(percent);
+        cart.setDiscount(percent);
     }
 
     public void printCart() {
         for (CartItem item : cart.getItems()) {
-            System.out.println(item.getProduct().getName() + " x" + item.getQuantity() + " = " + item.getTotalPrice());
+            System.out.println(item.getProduct().name() + " x" + item.getQuantity() + " = " + item.getTotalPrice());
         }
         System.out.println("Итого со скидкой: " + cart.calculateTotal());
     }

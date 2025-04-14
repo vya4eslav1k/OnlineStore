@@ -16,7 +16,6 @@
 
 - **Product**
     - Поля: `name` (название), `price` (цена)
-    - Методы: геттеры
 
 - **CartItem**
     - Поля: `Product product`, `int quantity`

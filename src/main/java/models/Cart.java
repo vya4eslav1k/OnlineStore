@@ -15,7 +15,7 @@ public class Cart {
         return items;
     }
 
-    public void applyDiscount(double percent) {
+    public void setDiscount(double percent) {
         this.discountPercent = percent;
     }
 
