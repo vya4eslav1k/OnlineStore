@@ -15,16 +15,11 @@ public class Cart {
         return items;
     }
 
-    public void setDiscount(double percent) {
-        this.discountPercent = percent;
+    public double getDiscountPercent() {
+        return discountPercent;
     }
 
-    public double calculateTotal() {
-        double total = 0;
-        for (CartItem item : items) {
-            total += item.getTotalPrice();
-        }
-        double discountAmount = total * discountPercent / 100;
-        return total - discountAmount;
+    public void setDiscount(double percent) {
+        this.discountPercent = percent;
     }
 }

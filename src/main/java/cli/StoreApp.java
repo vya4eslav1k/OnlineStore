@@ -22,14 +22,13 @@ public class StoreApp {
         while (running) {
             try {
                 System.out.println("""
-                        \n
-                        Пиши \'catalog\' что бы посмотреть каталог
-                        Пиши \'add\' что бы добавить товар в корзину
-                        Пиши \'discount\' что бы применить скидку
-                        Пиши \'list\' что бы показать корзину
-                        Пиши \'exit\' что бы выйти
-                        """);
-
+                \n
+                Пиши \'catalog\' что бы посмотреть каталог
+                Пиши \'add\' что бы добавить товар в корзину
+                Пиши \'discount\' что бы применить скидку
+                Пиши \'list\' что бы показать корзину
+                Пиши \'exit\' что бы выйти
+                """);
                 String choice = scanner.nextLine();
                 switch (Commands.valueOf(choice.toUpperCase())) {
                     case Commands.CATALOG -> store.showCatalog();
@@ -52,9 +51,9 @@ public class StoreApp {
             } catch (NumberFormatException e) {
                 System.out.println("Необработанная ошибка");
             }
-            scanner.close();
-        }
 
+        }
+        scanner.close();
         System.out.println("Спасибо за покупки!");
     }
 }

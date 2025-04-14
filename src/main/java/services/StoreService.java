@@ -40,6 +40,15 @@ public class StoreService {
         for (CartItem item : cart.getItems()) {
             System.out.println(item.getProduct().name() + " x" + item.getQuantity() + " = " + item.getTotalPrice());
         }
-        System.out.println("Итого со скидкой: " + cart.calculateTotal());
+        System.out.println("Итого со скидкой: " + calculateTotal());
+    }
+
+    public double calculateTotal() {
+        double total = 0;
+        for (CartItem item : cart.getItems()) {
+            total += item.getTotalPrice();
+        }
+        double discountAmount = total * cart.getDiscountPercent() / 100;
+        return total - discountAmount;
     }
 }
