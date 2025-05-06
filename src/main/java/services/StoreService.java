@@ -1,6 +1,5 @@
 package services;
 
-import enums.Commands;
 import enums.PromoCodes;
 import models.Cart;
 import models.CartItem;
@@ -27,25 +26,28 @@ public class StoreService {
         }
     }
 
-    public void addProductToCart(String name, int quantity) {
+    public void addProductToCartByName(String name, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be positive.");
         }
         for (Product p : catalog) {
             if (p.name().equalsIgnoreCase(name)) {
-                List<CartItem> items = cart.getItems();
-                for (CartItem item : items) {
-                    if (item.getProduct().name().equalsIgnoreCase(name)) {
-                        item.setQuantity(item.getQuantity() + quantity);
-                        return;
-                    }
-                }
-                cart.addItem(p, quantity);
-                System.out.println("Добавлено: " + name + " x" + quantity);
-                return;
+                addProductToCart(p, quantity);
             }
         }
         System.out.println("Товар не найден: " + name);
+    }
+
+    private void addProductToCart(Product product, int quantity) {
+        List<CartItem> items = cart.getItems();
+        for (CartItem item : items) {
+            if (item.getProduct().name().equalsIgnoreCase(product.name())) {
+                item.setQuantity(item.getQuantity() + quantity);
+                return;
+            }
+        }
+        cart.addItem(product, quantity);
+        System.out.println("Добавлено: " + product.name() + " x" + quantity);
     }
 
     public void applyDiscount(double percent) {
@@ -72,17 +74,17 @@ public class StoreService {
     }
 
     public void applyPromoCode(String promoCode) {
-        PromoCodes code = PromoCodes.valueOf(promoCode);
+        PromoCodes code;
+        try {
+            code = PromoCodes.valueOf(promoCode);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Promo code does not exist.");
+        }
         if (usedPromoCodes.contains(code)) {
             throw new IllegalArgumentException("Promo code " + promoCode + " is already used.");
         }
-        try {
-            usedPromoCodes.add(code);
-            System.out.println("Промокод применен! Ваша скидка: " + code.getDiscount() + "%");
-            applyDiscount(code.getDiscount());
-        }
-        catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Promo code does not exist.");
-        }
+        usedPromoCodes.add(code);
+        System.out.println("Промокод применен! Ваша скидка: " + code.getDiscount() + "%");
+        applyDiscount(code.getDiscount());
     }
 }

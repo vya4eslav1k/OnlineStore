@@ -38,32 +38,17 @@ public class StoreApp {
                         String name = scanner.nextLine();
                         System.out.print("Введите количество: ");
                         int quantity = Integer.parseInt(scanner.nextLine());
-                        try {
-                            store.addProductToCart(name, quantity);
-                        }
-                        catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
-                        }
+                        store.addProductToCartByName(name, quantity);
                     }
                     case Commands.DISCOUNT -> {
                         System.out.print("Введите процент скидки: ");
                         double percent = Double.parseDouble(scanner.nextLine());
-                        try {
-                            store.applyDiscount(percent);
-                        }
-                        catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
-                        }
+                        store.applyDiscount(percent);
                     }
                     case Commands.PROMO_CODE -> {
                         System.out.print("Введите промокод: ");
                         String promoCode = scanner.nextLine();
-                        try {
-                            store.applyPromoCode(promoCode);
-                        }
-                        catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
-                        }
+                        store.applyPromoCode(promoCode);
                     }
                     case Commands.LIST -> store.printCart();
                     case Commands.EXIT -> running = false;
@@ -71,6 +56,8 @@ public class StoreApp {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Необработанная ошибка");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
 
         }
