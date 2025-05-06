@@ -26,6 +26,7 @@ public class StoreApp {
                 Пиши \'catalog\' что бы посмотреть каталог
                 Пиши \'add\' что бы добавить товар в корзину
                 Пиши \'discount\' что бы применить скидку
+                Пиши \'promo_code\' что бы применить скидку
                 Пиши \'list\' что бы показать корзину
                 Пиши \'exit\' что бы выйти
                 """);
@@ -37,12 +38,32 @@ public class StoreApp {
                         String name = scanner.nextLine();
                         System.out.print("Введите количество: ");
                         int quantity = Integer.parseInt(scanner.nextLine());
-                        store.addProductToCart(name, quantity);
+                        try {
+                            store.addProductToCart(name, quantity);
+                        }
+                        catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                     case Commands.DISCOUNT -> {
                         System.out.print("Введите процент скидки: ");
                         double percent = Double.parseDouble(scanner.nextLine());
-                        store.applyDiscount(percent);
+                        try {
+                            store.applyDiscount(percent);
+                        }
+                        catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    case Commands.PROMO_CODE -> {
+                        System.out.print("Введите промокод: ");
+                        String promoCode = scanner.nextLine();
+                        try {
+                            store.applyPromoCode(promoCode);
+                        }
+                        catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                     case Commands.LIST -> store.printCart();
                     case Commands.EXIT -> running = false;
